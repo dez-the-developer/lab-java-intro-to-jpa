@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -42,6 +44,23 @@ public class CustomerServiceTest {
     public void testDeleteCustomer() {
         customerRepository.deleteById(customer.getCustomerId());
         assertFalse(customerRepository.findById(customer.getCustomerId()).isPresent());
+    }
+
+    @Test
+    public void testFindCustomerByName() {
+        Customer customer = new Customer("Alice Johnson", CustomerStatus.SILVER, 2500);
+        customerRepository.save(customer);
+        List<Customer> foundCustomers = customerRepository.findByCustomerName("Alice Johnson");
+        assertEquals(1, foundCustomers.size());
+        assertEquals("Alice Johnson", foundCustomers.get(0).getCustomerName());
+    }
+
+    @Test
+    public void testFindCustomerByStatus() {
+        customerRepository.save(new Customer("Bob Brown", CustomerStatus.GOLD, 4000));
+        List<Customer> foundCustomers = customerRepository.findByCustomerStatus(CustomerStatus.GOLD);
+        assertFalse(foundCustomers.isEmpty());
+        assertEquals(CustomerStatus.GOLD, foundCustomers.get(0).getCustomerStatus());
     }
 }
 

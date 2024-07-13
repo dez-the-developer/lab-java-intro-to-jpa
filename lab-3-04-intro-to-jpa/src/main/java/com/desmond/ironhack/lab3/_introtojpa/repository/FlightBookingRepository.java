@@ -6,5 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface FlightBookingRepository extends JpaRepository<FlightBooking, Integer> {
+    // Additional query methods can be added here if needed in the future
 }
 

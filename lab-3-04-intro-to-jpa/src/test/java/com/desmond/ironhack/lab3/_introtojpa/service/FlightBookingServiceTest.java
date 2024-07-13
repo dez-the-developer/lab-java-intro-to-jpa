@@ -33,9 +33,9 @@ public class FlightBookingServiceTest {
     @BeforeEach
     public void setUp() {
         Customer customer = new Customer("Jane Doe", CustomerStatus.GOLD, 2000);
-        customerRepository.save(customer);  // Save customer first
+        customer = customerRepository.save(customer);  // Save customer first
         Flight flight = new Flight("DL123", "Airbus A320", 200, 1500);
-        flightRepository.save(flight);  // Save flight first
+        flight = flightRepository.save(flight);  // Save flight first
         flightBooking = new FlightBooking(customer, flight);
         flightBookingRepository.save(flightBooking);
     }
@@ -58,3 +58,5 @@ public class FlightBookingServiceTest {
         assertFalse(flightBookingRepository.findById(flightBooking.getBookingId()).isPresent());
     }
 }
+
+
